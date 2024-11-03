@@ -1,5 +1,4 @@
-#include <nds.h>
-#include <gl2d.h>
+#include "starter.h"
 #include <iostream>
 #include <vector>
 
@@ -34,17 +33,6 @@ const int BLUE = RGB15(0, 0, 255);
 
 bool isGamePaused;
 bool isAutoPlayMode = true;
-
-typedef struct
-{
-	float x;
-	float y;
-	float w;
-	float h;
-	unsigned int color;
-	bool isDestroyed;
-	int brickPoints;
-} Rectangle;
 
 Rectangle player = {HALF_WIDTH, SCREEN_HEIGHT - 16, 35, 8, WHITE};
 Rectangle ball = {HALF_WIDTH, HALF_HEIGHT, 8, 8, WHITE};
@@ -93,17 +81,6 @@ std::vector<Rectangle> createBricks()
 }
 
 std::vector<Rectangle> bricks = createBricks();
-
-void drawRectangle(Rectangle &rectangle)
-{
-	glBoxFilled(rectangle.x, rectangle.y, rectangle.x + rectangle.w, rectangle.y + rectangle.h, rectangle.color);
-}
-
-bool hasCollision(Rectangle &bounds, Rectangle &ball)
-{
-	return bounds.x < ball.x + ball.w && bounds.x + bounds.w > ball.x &&
-		   bounds.y < ball.y + ball.h && bounds.y + bounds.h > ball.y;
-}
 
 void update()
 {
@@ -211,8 +188,6 @@ void renderBottomScreen()
 
 	glEnd2D();
 }
-
-void initSubSprites(void);
 
 int main(int argc, char *argv[])
 {
@@ -323,28 +298,4 @@ int main(int argc, char *argv[])
 		glFlush(0);
 		swiWaitForVBlank();
 	}
-}
-
-void initSubSprites(void)
-{
-	oamInit(&oamSub, SpriteMapping_Bmp_2D_256, false);
-
-	int x = 0;
-	int y = 0;
-
-	int id = 0;
-
-	for (y = 0; y < 3; y++)
-	{
-		for (x = 0; x < 4; x++)
-		{
-			oamSub.oamMemory[id].attribute[0] = ATTR0_BMP | ATTR0_SQUARE | (64 * y);
-			oamSub.oamMemory[id].attribute[1] = ATTR1_SIZE_64 | (64 * x);
-			oamSub.oamMemory[id].attribute[2] = ATTR2_ALPHA(1) | (8 * 32 * y) | (8 * x);
-			id++;
-		}
-	}
-
-	swiWaitForVBlank();
-	oamUpdate(&oamSub);
 }
