@@ -226,11 +226,11 @@ int main(int argc, char *argv[])
 				 (u16 *)font_siPal,
 				 (u8 *)font_16x16Bitmap);
 
-	mmLoad(MOD_FLATOUTLIES);
+	// mmLoad(MOD_FLATOUTLIES);
 
-	mmStart(MOD_FLATOUTLIES, MM_PLAY_LOOP);
+	// mmStart(MOD_FLATOUTLIES, MM_PLAY_LOOP);
 
-	mmSetModuleVolume(200);
+	// mmSetModuleVolume(200);
 
 	mmLoadEffect(SFX_MAGIC);
 
